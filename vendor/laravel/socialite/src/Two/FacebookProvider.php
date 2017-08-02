@@ -88,8 +88,8 @@ class FacebookProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        echo $meUrl = $this->graphUrl.'/'.$this->version.'/me?access_token='.$token.'&fields='.implode(',', $this->fields);
-        die;
+        $meUrl = $this->graphUrl.'/'.$this->version.'/me?access_token='.$token.'&fields='.implode(',', $this->fields);
+
         if (! empty($this->clientSecret)) {
             $appSecretProof = hash_hmac('sha256', $token, $this->clientSecret);
 
