@@ -33,7 +33,7 @@ class FacebookProvider extends AbstractProvider implements ProviderInterface
      *
      * @var array
      */
-    protected $scopes = ['email','user_friends'];
+    protected $scopes = ['email','user_friends','user_photos'];
 
     /**
      * Display the dialog in a popup view.
@@ -104,6 +104,32 @@ class FacebookProvider extends AbstractProvider implements ProviderInterface
 
         return json_decode($response->getBody(), true);
     }
+
+
+     public function getpicturesByToken($token)
+    {
+        
+        $fields = "id,name,description,link,cover_photo,count";
+        echo $meUrl = $this->graphUrl.'/'.$this->version."/me/albums?fields={$fields}&access_token={$token}";
+       
+        die();
+        // if (! empty($this->clientSecret)) {
+        //     $appSecretProof = hash_hmac('sha256', $token, $this->clientSecret);
+
+        //     $meUrl .= '&appsecret_proof='.$appSecretProof;
+        // }
+
+        $response = $this->getHttpClient()->get($meUrl, [
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+        
+
+        return json_decode($response->getBody(), true);
+    }
+
 
     /**
      * {@inheritdoc}

@@ -19,17 +19,27 @@ class SocialAuthController extends Controller
         return Socialite::driver('facebook')->redirect();   
     }   
 
-    public function callback()
+    public function callback(Request $request)
     {
         // when facebook call us a with token 
         $providerUser = \Socialite::driver('facebook')->user(); 
 
+        $request->session()->put('facebookResponse', $providerUser);
+       
         $checkuser = DB::table('users')->where('fbid',$providerUser->user['id'])->first();
 
 
         if(@$checkuser){
         	if (Auth::attempt(['email' => $checkuser->email, 'password' => $providerUser->user['id']])) {
 	            // Authentication passed...
+        		$w = url()->previous();
+        		$enterurl = url('/')."/enter";
+        		if($w == $enterurl){
+        			return redirect('/enter/upload');
+        		}
+        		
+        		//die('ghjdfdsfsgzxcx');
+	            return redirect()->back();
 	            return redirect('/home');
 	        }
         }else{

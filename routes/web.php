@@ -25,3 +25,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/redirect', 'SocialAuthController@redirect');
 Route::get('/callback', 'SocialAuthController@callback');
+Route::get('/enter', 'UsersController@enter');
+Route::get('/enter/upload', 'UsersController@uploadget');
+Route::post('/enter/upload', 'UsersController@upload');
+
+Route::get('/enter/facebookphoto/{page?}', 'UsersController@fbphotos');
